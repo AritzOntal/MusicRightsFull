@@ -1,0 +1,14 @@
+{
+  "priority": 2,
+  "request": {
+    "method": "GET",
+    "urlPathPattern": "/(concerts|claims)/by-musician/999"
+  },
+  "response": {
+    "status": 404,
+    "bodyFileName": "error-404-musician-rel.json",
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

@@ -1,0 +1,1232 @@
+openapi: 3.0.3
+info:
+  title: Music Rights
+  description: API para la gestión y automatización de reclamo de Royalties.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8085/api
+    description: Servidor Local
+
+paths:
+  /claims:
+    get:
+      summary: Obtener lista de reclamaciones por filtros
+      parameters:
+        - name: pending
+          in: query
+          schema:
+            type: boolean
+        - name: status
+          in: query
+          schema:
+            type: string
+        - name: type
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Claim'
+        '400':
+          description: Bad Request. Parámetros de la consulta no válidos.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                code: 400
+                title: Bad Request
+                message: Parámetros de filtro inválidos o mal formados
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalError'
+              example:
+                code: 500
+                message: Error inesperado al recuperar la lista de reclamaciones
+    post:
+      summary: Crear nueva reclamación
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Claim'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Claim'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                code: 400
+                title: Validation Error
+                message: Datos de la reclamación incompletos o inválidos
+
+  /claims/{id}:
+    get:
+      summary: Buscar reclamación por su id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Claim'
+        '404':
+          description: La reclamación no existe
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                code: 404
+                title: Not Found
+                message: No se ha encontrado ninguna reclamación con el ID proporcionado
+    put:
+      summary: Modificar reclamación
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Claim'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                code: 400
+                title: Bad Request
+                message: Error de validación en los datos de actualización
+        '404':
+          description: La reclamación no existe
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                code: 404
+                title: Not Found
+                message: No se puede actualizar una reclamación que no existe
+    delete:
+      summary: Eliminar reclamación.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: La reclamación no existe
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                code: 404
+                title: Not Found
+                message: No se puede eliminar. ID de reclamación no encontrado
+
+  /claims/by-musician/{id}:
+    get:
+      summary: Buscar las reclamaciones de un músico por su id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Claim'
+        '404':
+          description: El músico no existe
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                code: 404
+                title: Not Found
+                message: El músico especificado no existe
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalError'
+              example:
+                code: 500
+                message: Error al buscar las reclamaciones del músico
+
+  /concerts:
+    get:
+      summary: Obtener lista de conciertos por músico
+      parameters:
+        - name: city
+          in: query
+          schema:
+            type: string
+        - name: status
+          in: query
+          schema:
+            type: string
+        - name: performed
+          in: query
+          schema:
+            type: boolean
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Concert'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                code: 400
+                title: Bad Request
+                message: Los parámetros de búsqueda de conciertos son inválidos
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalError'
+              example:
+                code: 500
+                message: Error interno al recuperar conciertos
+    post:
+      summary: Crear concierto
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Concert'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Concert'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                code: 400
+                title: Validation Error
+                message: Faltan datos obligatorios del concierto
+
+  /concerts/{id}:
+    get:
+      summary: Obetener concierto por id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Concert'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                code: 404
+                title: Not Found
+                message: Concierto no encontrado con el ID indicado
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalError'
+              example:
+                code: 500
+                message: Error inesperado al obtener el concierto
+    put:
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Concert'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                code: 400
+                title: Bad Request
+                message: Datos inválidos para la actualización del concierto
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                code: 404
+                title: Not Found
+                message: No se encuentra el concierto a modificar
+    delete:
+      summary: Eliminar concierto
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                code: 404
+                title: Not Found
+                message: No se encuentra el concierto a eliminar
+
+  /concerts/by-musician/{id}:
+    get:
+      summary: Obtener conciertos de un músico por id de concierto
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Concert'
+        '404':
+          description: Musician Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                code: 404
+                title: Not Found
+                message: Músico no encontrado
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalError'
+              example:
+                code: 500
+                message: Error al recuperar los conciertos del músico
+
+  /documents:
+    get:
+      summary: Obtener lista de documentos por filtrados
+      parameters:
+        - name: type
+          in: query
+          schema:
+            type: string
+        - name: complete
+          in: query
+          schema:
+            type: boolean
+        - name: createAd
+          in: query
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Document'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                code: 400
+                title: Bad Request
+                message: Filtros de documentos inválidos
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalError'
+              example:
+                code: 500
+                message: Error al listar los documentos
+    post:
+      summary: Completar campos documento
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Document'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Document'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                code: 400
+                title: Validation Error
+                message: Datos del documento incompletos
+
+  /documents/{id}:
+    get:
+      summary: Obtener documento por id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Document'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                code: 404
+                title: Not Found
+                message: Documento no encontrado
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalError'
+              example:
+                code: 500
+                message: Error interno al recuperar el documento
+    put:
+      summary: Modificar documento
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Document'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                code: 400
+                title: Bad Request
+                message: Formato de documento inválido
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                code: 404
+                title: Not Found
+                message: No se puede modificar un documento inexistente
+    delete:
+      summary: Eliminar documento
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                code: 404
+                title: Not Found
+                message: No se puede eliminar el documento solicitado
+
+  /documents/by-claim/{id}:
+    get:
+      summary: Obtener documento por id de reclamación
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Document'
+        '404':
+          description: Claim Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                code: 404
+                title: Not Found
+                message: Reclamación asociada no encontrada
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalError'
+              example:
+                code: 500
+                message: Error al recuperar el documento de la reclamación
+
+  /works:
+    get:
+      summary: Listar obras musicales con opción a 3 filtros
+      parameters:
+        - name: duration
+          in: query
+          schema:
+            type: number
+            format: float
+        - name: composedAt
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: registred
+          in: query
+          schema:
+            type: boolean
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Work'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                code: 400
+                title: Bad Request
+                message: Parámetros de filtro de obras incorrectos
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalError'
+              example:
+                code: 500
+                message: Error del servidor al listar obras
+    post:
+      summary: Registrar nueva obra
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Work'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Work'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                code: 400
+                title: Validation Error
+                message: Datos de la obra inválidos o ISRC duplicado
+
+  /works/{id}:
+    get:
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Work'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                code: 404
+                title: Not Found
+                message: Obra musical no encontrada
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalError'
+              example:
+                code: 500
+                message: Error inesperado al recuperar la obra
+    put:
+      summary: Modificar obra
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Work'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                code: 400
+                title: Bad Request
+                message: Error de validación en los datos de la obra
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                code: 404
+                title: Not Found
+                message: No se puede actualizar una obra inexistente
+    delete:
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                code: 404
+                title: Not Found
+                message: No se puede eliminar la obra solicitada
+
+  /v1/musicians:
+    get:
+      summary: Listar músicos
+      parameters:
+        - name: dni
+          in: query
+          schema:
+            type: string
+        - name: affiliated
+          in: query
+          schema:
+            type: boolean
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Musician'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                code: 400
+                title: Bad Request
+                message: Formato de DNI incorrecto
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalError'
+              example:
+                code: 500
+                message: Error al recuperar la lista de músicos
+    post:
+      summary: Registrar nuevo músico
+      deprecated: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Musician'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Musician'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                code: 400
+                title: Validation Error
+                message: El músico ya existe o el DNI es inválido
+
+  /v1/musicians/{id}:
+    get:
+      summary: Obtener músico por id
+      deprecated: true
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Musician'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                code: 404
+                title: Not Found
+                message: Músico no encontrado
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalError'
+              example:
+                code: 500
+                message: Error inesperado al obtener datos del músico
+    put:
+      summary: Modificar datos del músico
+      deprecated: true
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Musician'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                code: 400
+                title: Bad Request
+                message: Datos de afiliación incompletos
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                code: 404
+                title: Not Found
+                message: No se puede editar un músico inexistente
+    delete:
+      summary: Eliminar músico
+      deprecated: true
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                code: 404
+                title: Not Found
+                message: El músico a eliminar no existe
+
+  /v2/musicians:
+    post:
+      summary: Registrar nuevo músico (V2)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MusicianInDto'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Musician'
+
+  /v2/musicians/{id}:
+    get:
+      summary: Obtener músico por id (V2)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MusicianOutDto'
+    put:
+      summary: Modificar condiciones del músico (V2)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MusicianUpdateConditionsDto'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Musician'
+    delete:
+      summary: Eliminar músico (V2)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteResponseDto'
+
+components:
+  schemas:
+    Work:
+      type: object
+      required: [ title, isrc, genre, registred ]
+      properties:
+        id:
+          type: integer
+          format: int64
+          readOnly: true
+        title:
+          type: string
+          minLength: 1
+        isrc:
+          type: string
+          pattern: '^[A-Z]{2}[A-Z0-9]{3}\d{2}\d{5}$'
+          example: "ESABC2300123"
+          description: "Código único ISRC"
+        genre:
+          type: string
+          minLength: 1
+        duration:
+          type: number
+          format: float
+          description: "Duración en segundos/minutos"
+          minimum: 0.0
+        composedAt:
+          type: string
+          format: date
+          description: "Fecha de composición"
+        registred:
+          type: boolean
+
+    Musician:
+      type: object
+      required: [ firstName, lastName, affiliated, dni ]
+      properties:
+        id:
+          type: integer
+          format: int64
+          readOnly: true
+        firstName:
+          type: string
+        lastName:
+          type: string
+        birthDate:
+          type: string
+          format: date
+        affiliated:
+          type: boolean
+        dni:
+          type: string
+          pattern: '^\d{8}[A-Za-z]$'
+          example: "12345678Z"
+        performanceFee:
+          type: number
+          format: float
+          minimum: 0.0
+        affiliatedNumber:
+          type: integer
+          format: int64
+        works:
+          type: array
+          items:
+            $ref: '#/components/schemas/Work'
+
+    Concert:
+      type: object
+      required: [ city, province, date, performed ]
+      properties:
+        id:
+          type: integer
+          format: int64
+          readOnly: true
+        showTitle:
+          type: string
+        city:
+          type: string
+          minLength: 1
+        province:
+          type: string
+          minLength: 1
+        date:
+          type: string
+          format: date
+        status:
+          type: string
+        performed:
+          type: boolean
+        ticketPrice:
+          type: number
+          format: float
+          minimum: 0.0
+        longitude:
+          type: number
+          format: double
+        latitude:
+          type: number
+          format: double
+        musician:
+          $ref: '#/components/schemas/Musician'
+
+    Claim:
+      type: object
+      required: [ reference ]
+      properties:
+        id:
+          type: integer
+          format: int64
+          readOnly: true
+        reference:
+          type: string
+          minLength: 1
+        status:
+          type: string
+        type:
+          type: string
+        description:
+          type: string
+        pending:
+          type: boolean
+        musician:
+          $ref: '#/components/schemas/Musician'
+
+    Document:
+      type: object
+      required: [ type, filename ]
+      properties:
+        id:
+          type: integer
+          format: int64
+          readOnly: true
+        type:
+          type: string
+          minLength: 1
+        filename:
+          type: string
+          minLength: 1
+        size:
+          type: integer
+          format: int64
+          minimum: 0
+        createAt:
+          type: string
+          format: date
+        complete:
+          type: boolean
+        completionPercentage:
+          type: number
+          format: float
+          maximum: 100.0
+        claim:
+          $ref: '#/components/schemas/Claim'
+
+    MusicianInDto:
+      type: object
+      required: [ firstName, lastName, dni ]
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        birthDate:
+          type: string
+          format: date
+        dni:
+          type: string
+          pattern: '^\d{8}[A-Za-z]$'
+
+    MusicianOutDto:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        dni:
+          type: string
+
+    MusicianUpdateConditionsDto:
+      type: object
+      properties:
+        performanceFee:
+          type: number
+          format: float
+        affiliated:
+          type: boolean
+
+    DeleteResponseDto:
+      type: object
+      properties:
+        message:
+          type: string
+        id:
+          type: integer
+          format: int64
+
+    ErrorResponse:
+      type: object
+      description: Estructura estándar para respuestas de error
+      properties:
+        code:
+          type: integer
+          description: Código de estado HTTP
+        title:
+          type: string
+          description: Título del error
+        message:
+          type: string
+          description: Descripción del error
+
+    InternalError:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: Código de estado HTTP
+        message:
+          type: string
+          description: Descripción del error

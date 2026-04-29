@@ -1,0 +1,5 @@
+{
+  "code": 400,
+  "title": "Validation Error",
+  "message": "El formato del DNI es inválido (deben ser 8 números y una letra)"
+}

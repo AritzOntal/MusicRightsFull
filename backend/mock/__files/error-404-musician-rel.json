@@ -1,0 +1,5 @@
+{
+  "code": 404,
+  "title": "Musician Relation Not Found",
+  "message": "No se encontraron registros porque el músico con ID 999 no existe."
+}

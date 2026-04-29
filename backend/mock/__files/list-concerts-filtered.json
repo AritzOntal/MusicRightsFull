@@ -1,0 +1,7 @@
+[
+  { "id": 10,
+    "showTitle": "Filtered-concert",
+    "city": "Madrid",
+    "status": "CONFIRMED",
+    "performed": false }
+]

@@ -1,0 +1,17 @@
+{
+  "priority": 2,
+  "request": {
+    "method": "GET",
+    "urlPath": "/claims",
+    "queryParameters": {
+      "status": { "matches": ".*" },
+      "type": { "matches": ".*" },
+      "pending": { "matches": ".*" }
+    }
+  },
+  "response": {
+    "status": 200,
+    "bodyFileName": "list-claims-filtered.json",
+    "headers": { "Content-Type": "application/json" }
+  }
+}

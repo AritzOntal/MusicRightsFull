@@ -1,0 +1,13 @@
+{
+  "request": {
+    "method": "POST",
+    "urlPath": "/works"
+  },
+  "response": {
+    "status": 201,
+    "bodyFileName": "single-work.json",
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

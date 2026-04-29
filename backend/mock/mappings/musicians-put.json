@@ -1,0 +1,12 @@
+{
+  "request": {
+    "method": "PUT",
+    "urlPathPattern": "/musicians/[0-9]+"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

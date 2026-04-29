@@ -1,0 +1,13 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPath": "/works"
+  },
+  "response": {
+    "status": 200,
+    "bodyFileName": "list-works.json",
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

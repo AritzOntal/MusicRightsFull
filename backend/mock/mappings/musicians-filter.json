@@ -1,0 +1,17 @@
+{
+  "priority": 2,
+  "request": {
+    "method": "GET",
+    "urlPath": "/musicians",
+    "queryParameters": {
+      "dni": { "matches": ".*" },
+      "affiliated": { "matches": ".*" },
+      "firstName": { "matches": ".*" }
+    }
+  },
+  "response": {
+    "status": 200,
+    "bodyFileName": "list-musicians-filtered.json",
+    "headers": { "Content-Type": "application/json" }
+  }
+}

@@ -1,0 +1,15 @@
+[
+  {
+    "id": 100,
+    "reference": "CLM-2026-001",
+    "status": "OPEN",
+    "pending": true
+  },
+
+  {
+    "id": 101,
+    "reference": "CLM-2025-001",
+    "status": "OPEN",
+    "pending": true
+  }
+]

@@ -1,0 +1,12 @@
+{
+  "id": 100,
+  "reference": "CLM-2026-001",
+  "status": "OPEN",
+  "type": "ROYALTY",
+  "description": "Reclamación de derechos de autor tercer trimestre",
+  "pending": true,
+  "musician": {
+    "id": 1,
+    "firstName": "Aritz"
+  }
+}

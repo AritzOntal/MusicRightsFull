@@ -1,0 +1,13 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPathPattern": "/claims/[0-9]+"
+  },
+  "response": {
+    "status": 200,
+    "bodyFileName": "single-claim.json",
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

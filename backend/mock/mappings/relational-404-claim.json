@@ -1,0 +1,13 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPath": "/documents/by-claim/999"
+  },
+  "response": {
+    "status": 404,
+    "bodyFileName": "error-404-claim-rel.json",
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

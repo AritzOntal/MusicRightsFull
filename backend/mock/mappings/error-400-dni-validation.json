@@ -1,0 +1,14 @@
+{
+  "priority": 10,
+  "request": {
+    "method": "POST",
+    "urlPath": "/musicians"
+  },
+  "response": {
+    "status": 400,
+    "bodyFileName": "error-400-dni.json",
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "id": 10,
+  "showTitle": "Gira de Verano",
+  "city": "Madrid",
+  "province": "Madrid",
+  "date": "2026-07-15",
+  "status": "CONFIRMED",
+  "performed": false,
+  "ticketPrice": 45.0,
+  "musician": {
+    "id": 1,
+    "firstName": "Aritz"
+  }
+}

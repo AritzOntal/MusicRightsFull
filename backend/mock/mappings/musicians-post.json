@@ -1,0 +1,19 @@
+{
+  "priority": 1,
+  "request": {
+    "method": "POST",
+    "urlPath": "/musicians",
+    "bodyPatterns": [
+      {
+        "matchesJsonPath": "$.[?(@.dni =~ /^[0-9]{8}[A-Za-z]$/)]"
+      }
+    ]
+  },
+  "response": {
+    "status": 201,
+    "bodyFileName": "single-musician.json",
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

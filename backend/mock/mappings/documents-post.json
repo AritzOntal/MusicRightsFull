@@ -1,0 +1,13 @@
+{
+  "request": {
+    "method": "POST",
+    "urlPath": "/documents"
+  },
+  "response": {
+    "status": 201,
+    "bodyFileName": "single-document.json",
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

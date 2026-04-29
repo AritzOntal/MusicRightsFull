@@ -1,0 +1,22 @@
+[
+  {
+    "id": 500,
+    "type": "CONTRACT",
+    "filename": "contrato_paco_2026.pdf",
+    "complete": true
+  },
+
+  {
+    "id": 501,
+    "type": "CONTRACT",
+    "filename": "contrato_aritz_2025.pdf",
+    "complete": true
+  },
+
+  {
+    "id": 502,
+    "type": "CONTRACT",
+    "filename": "contrato_lucia_2026.pdf",
+    "complete": true
+  }
+]

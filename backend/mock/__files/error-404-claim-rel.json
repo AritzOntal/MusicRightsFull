@@ -1,0 +1,5 @@
+{
+  "code": 404,
+  "title": "Claim Relation Not Found",
+  "message": "No se pueden listar documentos porque la reclamación con ID 999 no existe."
+}

@@ -1,0 +1,13 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPathPattern": "/claims/by-musician/[0-9]+"
+  },
+  "response": {
+    "status": 200,
+    "bodyFileName": "list-claims.json",
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

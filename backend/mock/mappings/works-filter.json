@@ -1,0 +1,17 @@
+{
+  "priority": 2,
+  "request": {
+    "method": "GET",
+    "urlPath": "/works",
+    "queryParameters": {
+      "genre": { "matches": ".*" },
+      "registred": { "matches": ".*" },
+      "isrc": { "matches": ".*" }
+    }
+  },
+  "response": {
+    "status": 200,
+    "bodyFileName": "list-works-filtered.json",
+    "headers": { "Content-Type": "application/json" }
+  }
+}

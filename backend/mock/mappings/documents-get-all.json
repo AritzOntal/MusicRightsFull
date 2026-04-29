@@ -1,0 +1,13 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPath": "/documents"
+  },
+  "response": {
+    "status": 200,
+    "bodyFileName": "list-documents.json",
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

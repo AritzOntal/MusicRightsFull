@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "firstName": "Aritz",
+    "lastName": "Ontalvilla",
+    "dni": "12345678Z",
+    "affiliated": true
+  },
+  {
+    "id": 2,
+    "firstName": "Rosalía",
+    "lastName": "Vila",
+    "dni": "87654321X",
+    "affiliated": true
+  }
+]

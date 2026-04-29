@@ -1,0 +1,14 @@
+{
+  "priority": 1,
+  "request": {
+    "method": "ANY",
+    "urlPathPattern": "/(musicians|concerts|works|claims|documents)/[^0-9]+"
+  },
+  "response": {
+    "status": 400,
+    "bodyFileName": "error-400-path.json",
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

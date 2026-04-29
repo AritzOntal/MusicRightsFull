@@ -1,0 +1,17 @@
+{
+  "priority": 2,
+  "request": {
+    "method": "GET",
+    "urlPath": "/documents",
+    "queryParameters": {
+      "type": { "matches": ".*" },
+      "complete": { "matches": ".*" },
+      "filename": { "matches": ".*" }
+    }
+  },
+  "response": {
+    "status": 200,
+    "bodyFileName": "list-documents-filtered.json",
+    "headers": { "Content-Type": "application/json" }
+  }
+}

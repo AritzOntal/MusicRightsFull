@@ -1,0 +1,5 @@
+{
+  "code": 400,
+  "title": "Invalid Path Parameter",
+  "message": "El parámetro de la URL debe ser un identificador numérico válido."
+}

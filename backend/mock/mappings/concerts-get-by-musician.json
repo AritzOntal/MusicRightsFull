@@ -1,0 +1,13 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPathPattern": "/concerts/by-musician/[0-9]+"
+  },
+  "response": {
+    "status": 200,
+    "bodyFileName": "list-concerts.json",
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

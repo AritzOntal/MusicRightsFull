@@ -1,0 +1,13 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPathPattern": "/concerts/[0-9]+"
+  },
+  "response": {
+    "status": 200,
+    "bodyFileName": "single-concert.json",
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

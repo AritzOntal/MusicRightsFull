@@ -1,0 +1,13 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPathPattern": "/works/[0-9]+"
+  },
+  "response": {
+    "status": 200,
+    "bodyFileName": "single-work.json",
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}
