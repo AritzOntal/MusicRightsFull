@@ -1,6 +1,7 @@
 package com.svalero.music.rights.service;
 
 import com.svalero.music.rights.domain.User;
+import com.svalero.music.rights.exception.InvalidCredentialsException;
 import com.svalero.music.rights.repository.MusicianRepository;
 import com.svalero.music.rights.repository.UserRepository;
 import com.svalero.music.rights.security.JwtUtils;
@@ -38,10 +39,10 @@ public class AuthService {
 
     public String login(String username, String password) {
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                .orElseThrow(() -> new InvalidCredentialsException("Usuario o contraseña incorrectos"));
 
         if (!passwordEncoder.matches(password, user.getPassword())) {
-            throw new RuntimeException("Credenciales inválidas");
+            throw new InvalidCredentialsException("Usuario o contraseña incorrectos");
         }
 
         // Si todo es correcto, generamos y devolvemos el String del token
