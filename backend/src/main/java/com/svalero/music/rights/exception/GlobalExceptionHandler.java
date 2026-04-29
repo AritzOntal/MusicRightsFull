@@ -55,6 +55,12 @@ public class GlobalExceptionHandler {
         return badRequest("Error en los campos");
     }
 
+    @ExceptionHandler(InvalidCredentialsException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidCredentials(InvalidCredentialsException ice) {
+        ErrorResponse body = new ErrorResponse(401, "unauthorized", ice.getMessage());
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(body);
+    }
+
     //HELPERS
     private ResponseEntity<ErrorResponse> notFound(String message) {
         ErrorResponse body = new ErrorResponse(404, "Not-found", message);
