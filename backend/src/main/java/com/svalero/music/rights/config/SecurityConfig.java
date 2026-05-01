@@ -63,11 +63,13 @@ public class SecurityConfig {
 
                         // LECTURA (GET)
                         .requestMatchers(HttpMethod.GET, "/api/v1/works/**", "/api/v1/works").hasAnyRole("USER", "MUSICIAN", "ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/v1/musicians/**", "/api/v1/musicians").hasAnyRole("USER", "MUSICIAN", "ADMIN")
 
                         // (POST, PUT, DELETE)
-                        .requestMatchers("/api/v1/works/**").hasAnyRole("MUSICIAN", "ADMIN")
+                        .requestMatchers("/api/v1/works/**").hasAnyRole("MUSICIAN", "ADMIN", "USER")
                         .requestMatchers("/api/v1/claims/**").hasAnyRole("MUSICIAN", "ADMIN")
                         .requestMatchers("/api/v1/concerts/**").hasAnyRole("MUSICIAN", "ADMIN")
+                        .requestMatchers("/api/v1/musicians/**").hasAnyRole("USER", "ADMIN")
 
                         // RESTO
                         .anyRequest().hasRole("ADMIN")
