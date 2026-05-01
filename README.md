@@ -9,7 +9,7 @@ Backend:
 
 ```
 cd backend
-./mvnw spring-boot:run
+mvn spring-boot:run -Dspring-boot.run.profiles=dev
 ```
 
 Frontend:
