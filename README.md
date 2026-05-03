@@ -23,7 +23,11 @@ Proyecto en un unico respositorio con:
 
 - **Vista por rol**: el dashboard adapta el contenido al rol del usuario (mensaje contextual y columnas mostradas).
 
-- **Tests unitarios**: tres tests con Vitest sobre el reducer del AuthContext, cubriendo las acciones INITIALIZE, LOGIN y LOGOUT.
+- **Tests automatizados** con Vitest y React Testing Library:
+  - **`AuthContext.test.ts`** (unitario): tres tests sobre el reducer del AuthContext, cubriendo las acciones INITIALIZE, LOGIN y LOGOUT.
+  - **`Login.test.tsx`** (integración): mockea el servicio para que falle con 401 y verifica que el formulario muestra el mensaje "Usuario o contraseña incorrectos".
+  - **`DashboardLogic.test.tsx`** (integración): mockea el hook `useWorks`, simula que el usuario escribe en el buscador y comprueba que la tabla filtra correctamente.
+  - **`useWorks.test.ts`** (unitario): mockea el servicio `getAllWorks`, monta el hook con `renderHook` y verifica la transición de `loading: true` a los datos cargados sin error.
 
 ## Decisiones técnicas
 
